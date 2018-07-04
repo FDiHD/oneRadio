@@ -3,8 +3,11 @@ package com.example.fdihd.oneradio;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.AudioDeviceInfo;
 import android.media.AudioManager;
+import android.media.Image;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -18,14 +21,19 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
+
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 
-public class radioactivity extends AppCompatActivity {
+public class RadioActivity extends AppCompatActivity {
     TextView text1;
     MediaPlayer mediaPlayer;
     String savedExtra;
@@ -45,6 +53,7 @@ public class radioactivity extends AppCompatActivity {
     TextView rinfo;
     String tinfo;
     String x2;
+    ImageView image;
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -63,9 +72,10 @@ public class radioactivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_radioactivity);
-        savedExtra = getIntent().getStringExtra("animal");
+        image = findViewById(R.id.imageView);
         infos= findViewById(R.id.textView2);
         stp = findViewById(R.id.imageView2);
         text1 = findViewById(R.id.textView);
@@ -74,6 +84,7 @@ public class radioactivity extends AppCompatActivity {
         rinfo.setText(tinfo);
         stp.setImageResource(R.drawable.playh);
         infos.setText("LOADING");
+        savedExtra = getIntent().getStringExtra("URL");
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         new PlayerTask().execute(savedExtra);
@@ -92,6 +103,9 @@ public class radioactivity extends AppCompatActivity {
         stp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+
                 if (started) {
                     started = false;
                     mediaPlayer.pause();
@@ -230,10 +244,10 @@ public class radioactivity extends AppCompatActivity {
 
                                 x2 = StringUtils.substringBetween(finalDoc1.toString(), "28,", "</");
 
-                                Log.d("PROBLEMA",x2);
+
 
                             if (x2 == null) {
-                                Log.d(" nu MERGE", x2);
+                                Log.d("STATUS ", x2);
                             }else{
                                 if(x2.equals(tester2)) {
                                     Log.d("CHANGE STATUS","NOTHING TO CHANGE");
@@ -256,5 +270,6 @@ public class radioactivity extends AppCompatActivity {
         }).start();
 
     }
+
 
 }

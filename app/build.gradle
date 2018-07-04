@@ -30,4 +30,7 @@ dependencies {
     compile 'org.jsoup:jsoup:1.10.1'
     compile group: 'javax.xml.parsers', name: 'jaxp-api', version: '1.4.5'
     compile'com.android.support:design:26.1.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    compile 'org.apache.commons:commons-lang3:3.6'
+    compile group: 'com.koushikdutta.ion', name: 'ion', version: '2.1.6'
 }

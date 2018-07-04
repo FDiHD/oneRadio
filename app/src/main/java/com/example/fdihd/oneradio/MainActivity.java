@@ -21,17 +21,18 @@ import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
-    String[] nameArray = {"Radio Liberty","Radio Romania Actualitati","Traditional Radio","Radio Lipova"};
+    String[] nameArray = {"Radio Liberty","Radio Romania Actualitati","Traditional Radio","Radio Lipova","HITRADIO CENTER"};
     String stream = "http://live.radiotequila.ro:7000/7.html";
     String[] infoArray = {
             "http://asculta.radioliberty.ro:1989/7.html",
             "http://89.238.227.6:8002/7.html",
             "http://radiotraditional.zapto.org:7600/7.html",
-            "http://radiolipova.radiolipova.net:1717/7.html"
+            "http://radiolipova.radiolipova.net:1717/7.html",
+            "http://212.30.80.195:8000/7.html"
 
 
     };
-    String[] streamurl= {"http://asculta.radioliberty.ro:1989/","http://89.238.227.6:8002/","http://radiotraditional.zapto.org:7600/","http://radiolipova.radiolipova.net:1717/"};
+    String[] streamurl= {"http://asculta.radioliberty.ro:1989/","http://89.238.227.6:8002/","http://radiotraditional.zapto.org:7600/","http://radiolipova.radiolipova.net:1717/","http://212.30.80.195:8000/"};
     private boolean prepared = true;
     ListView listView;
     TextView scroll;
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 while (prepared) {
                     Document finalDoc = null;
-                    final String[] arayf = new String[4];
+                    final String[] arayf = new String[5];
                     try {
                         for (int i=0; i < infoArray.length;i++) {
                             finalDoc = Jsoup.connect(infoArray[i])
@@ -53,9 +54,9 @@ public class MainActivity extends AppCompatActivity {
 
 
                             String x2 = StringUtils.substringBetween(finalDoc.toString(), "28,", "</");
-                            Log.d("DAAAAAAAAAA", "NURMAL ESTE" +i + "output"+ x2);
+                            Log.d("STATION", "ID " +i + " output "+ x2);
                             arayf[i]=x2;
-                            Log.d("DUUUPAAAA", "NURMAL ESTE" +i + "output"+ arayf[i]);
+                            Log.d("STATION", "ID " +i + " output "+ arayf[i]);
 
 
                         }
@@ -115,11 +116,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
-                Intent intent = new Intent(MainActivity.this, radioactivity.class);
+                Intent intent = new Intent(MainActivity.this, RadioActivity.class);
                 String message = streamurl[position];
                 String message2 =infoArray[position];
                 String message3= nameArray[position];
-                intent.putExtra("animal", message);
+                intent.putExtra("URL", message);
                 intent.putExtra("METADATA",message2);
                 intent.putExtra("NAME",message3);
                 startActivity(intent);
